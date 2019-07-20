@@ -1,8 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 from tinydb import TinyDB, Query
+from huey import SqliteHuey
 
 db = TinyDB('stores/ugamusic.db')
+huey = SqliteHuey('tasks.db')
 
 if False:
     page = requests.get('https://ugamusic.biz/hot100')
@@ -36,4 +39,10 @@ for chart_row in chart_rows:
     # Search the database for page (page w/song is like an uid)
     page = db.search(Songs.page == link['href'])
     if not page:
-        db.insert({'artist': artist.text, 'title': title.text, 'page': link['href']})
+        db.insert({
+            'artist': artist.text, 
+            'title': title.text, 
+            'page': link['href'], 
+            'downlaod_link': None,
+            'download_at': None,
+        })

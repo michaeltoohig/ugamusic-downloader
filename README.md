@@ -1,5 +1,7 @@
 # Ugamusic Downloader
 
+> Does not work as intended. TinyDB can not handle multiple processes. Will replace with database with sqlite.
+
 This is a simple downloader for (Ugamusic)[www.ugamusic.biz]. It will find and download new songs from the `Hot100` list. But it keeps a simple database so that it won't download any songs more than once and uses a task manager to add automatic retries to failed downloads.
 
 Run this script once a day or once a week to get the newest hot 100 songs.

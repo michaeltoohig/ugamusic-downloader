@@ -1,5 +1,6 @@
 beautifulsoup4
 requests
 tinydb
+tinyrecord
 huey
 python_dotenv

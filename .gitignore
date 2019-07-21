@@ -13,3 +13,4 @@ downloads/
 
 # Local database files
 *.db
+*.json

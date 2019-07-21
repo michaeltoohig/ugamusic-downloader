@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 
 from huey_config import huey
 from tasks import fetch_download_link, fetch_song
-from database import db, Songs
+from database import db, table, Songs
+from tinyrecord import transaction
 from settings import Config
 
 
@@ -26,6 +27,7 @@ if __name__ == '__main__':
         print('Failed to find Hot100 table')
         
     # Pull details from each row
+    new_songs = []
     for chart_row in chart_rows[:Config.DOWNLOAD_COUNT]:
         title = chart_row.find(class_='titlemeta')
         artist = chart_row.find(class_='namemeta')
@@ -35,12 +37,15 @@ if __name__ == '__main__':
         page = db.search(Songs.page == link['href'])
         if not page:
             print(f'Found new song: {artist.text} - {title.text}')
-            db.insert({
+            new_songs.append({
                 'artist': artist.text, 
                 'title': title.text, 
                 'page': link['href'], 
                 'download_link': False,
             })
+    if new_songs:
+        with transaction(table) as tr:
+            tr.insert_multiple(new_songs)
 
     # Trigger tasks to get the download links
     songs = db.search(Songs.download_link == False)

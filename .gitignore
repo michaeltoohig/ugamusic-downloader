@@ -1,7 +1,5 @@
 .env
 .venv/
-stores/
-pages/
 downloads/
 *.db
 __pycache__

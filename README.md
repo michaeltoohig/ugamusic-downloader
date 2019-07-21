@@ -1,14 +1,14 @@
 # Ugamusic Downloader
 
-This is a simple downloader for (Ugamusic)[www.ugamusic.biz]. It will find and download new songs from the `Hot100` list. But it keeps a simple database so that it won't download any songs more than once and uses a task manager to add automatic retries to failed downloads.
+This is a simple downloader for [Ugamusic](https://www.ugamusic.biz). It will find and download new songs from the `Hot100` list. But it keeps a simple database so that it won't download any songs more than once and uses a task manager to add automatic retries to failed downloads.
 
 Run this script once a day or once a week to get the newest hot 100 songs.
 
 It is built using these projects:
-  - (TinyDB)[https://github.com/msiemens/tinydb] Database
-  - (Huey)[https://github.com/coleifer/huey] Task Manager
-  - (BeautifulSoup)[https://www.crummy.com/software/BeautifulSoup/bs4/doc/] for web scraping
-  - (Requests)[https://2.python-requests.org/en/master/] for fetching URLs
+  - [TinyDB](https://github.com/msiemens/tinydb) Database
+  - [Huey](https://github.com/coleifer/huey) Task Manager
+  - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) for web scraping
+  - [Requests](https://2.python-requests.org/en/master/) for fetching URLs
 
 I filled the project with many comments and hopefully kept things very clear and concise for new programmers to learn from and contribute.
 
@@ -23,7 +23,7 @@ git clone https://github.com/michaeltoohig/ugamusic-downloader
 ```
 
 I recommend using a virtual environment then installing the requirements. 
-Learn about virtual environments (here)[https://realpython.com/python-virtual-environments-a-primer/].
+Learn about virtual environments [here](https://realpython.com/python-virtual-environments-a-primer/).
 
 ```
 cd ugamusic-downloader

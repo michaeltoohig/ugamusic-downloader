@@ -1,5 +1,15 @@
-.env
-.venv/
-downloads/
-*.db
+# Python cache files
 __pycache__
+
+# Envorinment variables file
+.env
+
+# Virtual environment
+venv/
+.venv/
+
+# Local downloads
+downloads/
+
+# Local database files
+*.db

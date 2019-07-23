@@ -37,7 +37,7 @@ if __name__ == '__main__':
         # Search the database for page (page w/song is like an uid)
         page = Song.select().where(Song.page == link['href'])
         if not page:
-            print(f'Found new song: {artist.text} - {title.text}')
+            print('Found new song: {0} - {1}'.format(artist.text, title.text))
             new_songs.append({
                 'artist': artist.text, 
                 'title': title.text, 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     # Trigger tasks to get the download links
     songs = Song.select().where(Song.download_link.is_null(True))
     if songs:
-        print(f'Will fetch the download link for {len(songs)} new songs')
+        print('Will fetch the download link for {0} new songs'.format(len(songs)))
     for i, item in enumerate(songs):
         # Add an increasing delay so we don't abuse the servers
         delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) ))
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     # Trigger tasks to get the songs
     songs = Song.select().where((Song.download_link.is_null(False)) & (Song.download_at.is_null(True)))
     if songs:
-        print(f'Will download {len(songs)} songs')
+        print('Will download {0} songs'.format(len(songs)))
     for i, item in enumerate(songs):
         # Add an increasing delay so we don't abuse the servers
         delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) ))

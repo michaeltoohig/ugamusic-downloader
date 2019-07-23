@@ -1,3 +1,4 @@
+from os.path import join
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -29,7 +30,8 @@ def fetch_song(link):
     # Get the file from the web
     response = requests.get(link)
     # Open a file on the computer and write the song to the file
-    with open(f'{Config.DOWNLOAD_DIRECTORY}/{song.artist} - {song.title}.mp3', 'wb') as f:
+    filename = '{1} - {2}.mp3'.format(song.artist, song.title)
+    with open(join(Config.DOWNLOAD_DIRECTORY, filename), 'wb') as f:
         f.write(response.content)
     # Update the database so the song is not downloaded twice
     with db.atomic():

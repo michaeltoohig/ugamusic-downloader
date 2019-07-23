@@ -1,8 +1,14 @@
-from tinydb import TinyDB, Query
+from peewee import *
 from settings import Config
 
-db = TinyDB(Config.DATABASE_FILE)
-table = db.table()
+db = SqliteDatabase(Config.DATABASE_FILE)
 
-# Create a query object for the songs in our database
-Songs = Query()
+class Song(Model):
+    artist = CharField()
+    title = CharField()
+    page = CharField(unique=True)
+    download_link = CharField(null=True)
+    download_at = DateField(null=True)
+
+    class Meta:
+        database = db

@@ -1,13 +1,11 @@
 # Ugamusic Downloader
 
-> Does not work as intended. TinyDB can not handle multiple processes. Will replace with database with sqlite.
-
-This is a simple downloader for [Ugamusic](https://www.ugamusic.biz). It will find and download new songs from the `Hot100` list. But it keeps a simple database so that it won't download any songs more than once and uses a task manager to add automatic retries to failed downloads.
+This is a simple downloader for [Ugamusic](https://www.ugamusic.biz). It will find and download new songs from the `Hot100` list. But it keeps a simple database so that it won't download any songs more than once and uses a task manager for scheduling downloads and to add automatic retries to failed downloads.
 
 Run this script once a day or once a week to get the newest hot 100 songs.
 
 It is built using these projects:
-  - [TinyDB](https://github.com/msiemens/tinydb) Database
+  - [PeeWee](https://github.com/coleifer/peewee) Database ORM
   - [Huey](https://github.com/coleifer/huey) Task Manager
   - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) for web scraping
   - [Requests](https://2.python-requests.org/en/master/) for fetching URLs
@@ -61,7 +59,7 @@ python main.py
 
 In the future I may add other music blogs or music release websites and I would like to reconfigure this project to work more like `youtubedl` with multiple extensions, one for each website.
 
-Short-term this project could be wrapped up in a `dockerfile`.
+Short-term this project could be wrapped up in a `dockerfile` or some other packaging for simple deployment.
 
 Another option is to add functionality to download all the songs of a particular artist or other page from the website.
 

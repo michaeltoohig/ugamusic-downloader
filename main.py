@@ -1,15 +1,16 @@
 import os
 import requests
+import random
 from bs4 import BeautifulSoup
 
 from huey_config import huey
 from tasks import fetch_download_link, fetch_song
-from database import db, table, Songs
-from tinyrecord import transaction
+from database import db, Song
 from settings import Config
 
 
 if __name__ == '__main__':
+    Song.create_table()
     print('Beginning Hot100 Ugamusic scan')
     # Get page
     response = requests.get(Config.URL)
@@ -34,29 +35,33 @@ if __name__ == '__main__':
         link = chart_row.find(class_='play-song', href=True)
         
         # Search the database for page (page w/song is like an uid)
-        page = db.search(Songs.page == link['href'])
+        page = Song.select().where(Song.page == link['href'])
         if not page:
             print(f'Found new song: {artist.text} - {title.text}')
             new_songs.append({
                 'artist': artist.text, 
                 'title': title.text, 
                 'page': link['href'], 
-                'download_link': False,
             })
     if new_songs:
-        with transaction(table) as tr:
-            tr.insert_multiple(new_songs)
+        with db.atomic():
+            query = Song.insert_many(new_songs)
+            query.execute()
 
     # Trigger tasks to get the download links
-    songs = db.search(Songs.download_link == False)
+    songs = Song.select().where(Song.download_link.is_null(True))
     if songs:
         print(f'Will fetch the download link for {len(songs)} new songs')
-    for item in songs:
-        fetch_download_link(item.get('page'))
+    for i, item in enumerate(songs):
+        # Add an increasing delay so we don't abuse the servers
+        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) )
+        fetch_download_link.schedule((item.page,), delay=delay)
 
     # Trigger tasks to get the songs
-    songs = db.search((Songs.download_link.exists()) & (Songs.download_at == False))
+    songs = Song.select().where((Song.download_link.is_null(False)) & (Song.download_at.is_null(True)))
     if songs:
         print(f'Will download {len(songs)} songs')
-    for item in songs:
-        fetch_song(item.get('download_link'))
+    for i, item in enumerate(songs):
+        # Add an increasing delay so we don't abuse the servers
+        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) )
+        fetch_song.schedule((item.download_link,), delay=delay)

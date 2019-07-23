@@ -54,7 +54,7 @@ if __name__ == '__main__':
         print(f'Will fetch the download link for {len(songs)} new songs')
     for i, item in enumerate(songs):
         # Add an increasing delay so we don't abuse the servers
-        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) )
+        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) ))
         fetch_download_link.schedule((item.page,), delay=delay)
 
     # Trigger tasks to get the songs
@@ -63,5 +63,5 @@ if __name__ == '__main__':
         print(f'Will download {len(songs)} songs')
     for i, item in enumerate(songs):
         # Add an increasing delay so we don't abuse the servers
-        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) )
+        delay = (30 * i) + random.randint(0, ( 60 * ( i / 2 ) ))
         fetch_song.schedule((item.download_link,), delay=delay)

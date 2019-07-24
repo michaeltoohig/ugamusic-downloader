@@ -30,7 +30,7 @@ def fetch_song(link):
     # Get the file from the web
     response = requests.get(link)
     # Open a file on the computer and write the song to the file
-    filename = '{1} - {2}.mp3'.format(song.artist, song.title)
+    filename = '{0} - {1}.mp3'.format(song.artist, song.title)
     with open(join(Config.DOWNLOAD_DIRECTORY, filename), 'wb') as f:
         f.write(response.content)
     # Update the database so the song is not downloaded twice
